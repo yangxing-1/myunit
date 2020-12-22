@@ -1,0 +1,12 @@
+server:
+  port: 8802
+
+spring:
+  cloud:
+    nacos:
+      # 发布服务时需要加上这个，不然Nacos无法监听到
+      discovery:
+        # 开发空间名称
+        namespace: localtest
+        # Nacos地址
+        server-addr: 192.168.80.237:8848,192.168.80.237:8849,192.168.80.33:8848

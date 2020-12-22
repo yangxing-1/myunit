@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    nacos:
+      # 配置
+      config:
+        # 开发空间名称
+        namespace: PUBLIC
+        # Nacos地址
+        server-addr: 192.168.80.237:8848,192.168.80.237:8849
+        # 使用的 Nacos 配置分组，默认为 DEFAULT_GROUP
+        group: DEFAULT_GROUP 
+        # 使用的 Nacos 配置集的 dataId，默认为 spring.application.name
+        name:
+        # Nacos用户名
+        username: nacos
+        # Nacos用户密码
+        password: nacos
+        # Nacos文件后缀
+        file-extension: yaml
