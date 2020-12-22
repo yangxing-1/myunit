@@ -1,0 +1,50 @@
+<html>
+ 
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+    </head>
+ 
+    <body>
+        <input type="text" id="name" /><button onclick="send()">发送消息</button>
+    </body>
+    <script>
+        var websocket = null;
+        //判断浏览器是否支持websocket
+        if('WebSocket' in window) {
+            //实现化WebSocket对象
+            websocket = new WebSocket("ws://localhost:8083/websocket");
+        } else {
+            alert('该浏览器不支持websocket')
+        }
+ 
+        //打开事件  
+        websocket.onopen = function(event) {
+            console.log('建立连接');
+        }
+        //关闭事件  
+        websocket.onclose = function(event) {
+            console.log("连接关闭");
+        }
+        //获得消息事件  
+        websocket.onmessage = function(event) {
+            console.log("收到消息：" + event.data);
+        }
+        
+        //发生了错误事件  
+        websocket.onerror = function(event) {
+            console.log("websocket 通信发生错误");
+        }
+        window.onbeforeunload = function(event) {
+            websocket.close();
+        }
+ 
+        //发送消息
+        function send() {
+            var message = document.getElementById('name').value;
+            console.log("发送的消息:" + message)
+            websocket.send(message);
+        }
+    </script>
+ 
+</html>

@@ -1,0 +1,69 @@
+Configuration:
+  # log4j2自身内部的信息输出，可以为空
+  status: warn
+  # 配置文件的时间间隔，如果文件被修改，则重新加载
+  # monitorInterval: 30
+  
+  # 定义全局变量
+  properties:
+    property:
+      # console 的日志级别
+      - name: log.level.console
+        value: info
+      # rolling file的日志级别
+      - name: log.level.rolling-file
+        value: info
+      # 日志文件的路径
+      - name: log.path
+        value: log
+      # 日志的格式
+      - name: log.pattern
+        #value: "%d{DEFAULT} %5p [%tn(%tid)] %c{1.} : %m%n"
+        value: "%d{DEFAULT} %5p [%tn(%tid)] %c{1.} : %m%n"
+  
+  appenders:
+    # Socket:
+    #   name: ELK
+    #   host: localhost
+    #   port: 5044
+    #   PatternLayout:
+    #     Pattern: ${log.pattern}
+    #   JsonLayout:
+    #     compact: true
+    #     eventEol: true
+    Console:
+      name: CONSOLE
+      target: SYSTEM_OUT
+      PatternLayout:
+        Pattern: ${log.pattern}
+    RollingFile:
+      name: ROLLING_FILE
+      fileName: ${log.path}/app.log
+      filePattern: "${log.path}/$${date:yyyy-MM}/app-%d{yyyy-MM-dd}-%i.log.gz"
+      PatternLayout:
+        Pattern: ${log.pattern}
+      # 只记录error
+      # Filters:
+      #   ThresholdFilter:
+      #     level: error
+      Policies:
+        # 按天分类
+        TimeBasedTriggeringPolicy:
+          modulate: true
+          interval: 1
+ 
+  Loggers:
+    Root:
+      level: info
+      AppenderRef:
+        - ref: CONSOLE
+        - ref: ROLLING_FILE
+        #- ref: ELK
+    # 为指定的包配置特殊的Log级别
+    # Logger:
+    #   - name: com.sunwayworld
+    #     additivity: false
+    #     level: trace
+    #     AppenderRef:
+    #       - ref: CONSOLE
+    #       - ref: ROLLING_FILE
