@@ -1,0 +1,17 @@
+server:
+  port: 8680
+
+spring:
+  cloud:
+    nacos:
+      # 发布服务时需要加上这个，不然Nacos无法监听到
+      discovery:
+        # 开发空间名称
+        namespace: localtest
+        # Nacos地址
+        server-addr: 192.168.80.237:8848,192.168.80.237:8849
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://192.168.80.237:3306/zuul?characterEncoding=utf8&useUnicode=true&serverTimezone=Asia/Shanghai
